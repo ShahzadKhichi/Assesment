@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  body {
+    @apply min-h-screen bg-slate-50 text-slate-900 font-sans antialiased;
+    background-image: radial-gradient(circle at top left, rgba(20, 184, 166, 0.12), transparent 28%), linear-gradient(135deg, #f8fafc 0%, #eef7f7 45%, #f8fafc 100%);
+  }
+
+  * {
+    @apply box-border;
+  }
+}
+
+@layer components {
+  .glass-card {
+    @apply rounded-3xl border border-white/60 bg-white/70 shadow-[0_20px_70px_-25px_rgba(15,23,42,0.35)] backdrop-blur-xl;
+  }
+
+  .glass-pill {
+    @apply rounded-full border border-white/50 bg-white/60 px-3 py-1 text-sm font-medium text-slate-700 shadow-sm backdrop-blur;
+  }
+}
+
+/* Custom Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.shimmer-effect {
+  background: linear-gradient(
+    90deg,
+    #f1f5f9 25%,
+    #e2e8f0 37%,
+    #f1f5f9 63%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00796b;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #004d40;
+}

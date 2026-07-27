@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verification Code — HOS Trip Planner</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #f8fafc;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #1e293b;
+    }
+    .email-container {
+      max-width: 580px;
+      margin: 30px auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+    }
+    .email-header {
+      background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);
+      padding: 36px 30px;
+      text-align: center;
+      color: #ffffff;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .email-header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .email-header p {
+      margin: 6px 0 0 0;
+      font-size: 13px;
+      color: #ccfbf1;
+    }
+    .email-body {
+      padding: 32px 30px;
+      text-align: center;
+    }
+    .greeting {
+      font-size: 15px;
+      color: #475569;
+      margin-bottom: 20px;
+    }
+    .otp-box-wrapper {
+      background: #f0fdf4;
+      border: 2px dashed #0d9488;
+      border-radius: 14px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .otp-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #0f766e;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+    .otp-code {
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: 10px;
+      color: #115e59;
+      margin: 0;
+    }
+    .expiry-note {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 10px;
+    }
+    .warning-box {
+      background: #fffbebf8;
+      border-left: 4px solid #f59e0b;
+      padding: 12px 16px;
+      border-radius: 8px;
+      text-align: left;
+      font-size: 12px;
+      color: #92400e;
+      margin-top: 24px;
+    }
+    .email-footer {
+      background: #f1f5f9;
+      padding: 20px 30px;
+      text-align: center;
+      font-size: 11px;
+      color: #94a3b8;
+      border-top: 1px solid #e2e8f0;
+    }
+    .email-footer p {
+      margin: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="email-container">
+    <div class="email-header">
+      <span class="header-badge">HOS Trip Planner Security</span>
+      <h1>Verification Code</h1>
+      <p>Confirm your identity to access commercial HOS route services</p>
+    </div>
+    <div class="email-body">
+      <p class="greeting">Hello,</p>
+      <p style="font-size: 14px; color: #334155; margin: 0;">
+        Use the 6-digit code below to complete your account verification:
+      </p>
+
+      <div class="otp-box-wrapper">
+        <div class="otp-label">Your 6-Digit Verification OTP</div>
+        <div class="otp-code">{{ otp_code }}</div>
+        <div class="expiry-note">Code expires in <strong>10 minutes</strong></div>
+      </div>
+
+      <div class="warning-box">
+        <strong>Security Notice:</strong> Never share this OTP verification code with anyone. HOS Trip Planner support will never ask for your code.
+      </div>
+    </div>
+    <div class="email-footer">
+      <p><strong>HOS Compliance Trip Planner Suite</strong></p>
+      <p>Automated FMCSA Duty Cycle Scheduling & ELD Daily Logs</p>
+      <p style="margin-top: 8px; color: #cbd5e1;">© 2026 HOS Trip Planner. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>
