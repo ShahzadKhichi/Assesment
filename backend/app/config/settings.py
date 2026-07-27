@@ -173,64 +173,8 @@ PDF_STORAGE_PATH: str = os.getenv('PDF_STORAGE_PATH', 'media/logs/')
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
-LOG_ENABLED: bool = os.getenv('LOG_ENABLED', 'True').lower() == 'true'
-LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')
-LOG_FILE: str = os.getenv('LOG_FILE', 'logs/django.log')
-
-# Ensure log directory exists (only if logging is enabled)
-if LOG_ENABLED:
-    LOG_DIR = BASE_DIR / 'logs'
-    try:
-        LOG_DIR.mkdir(exist_ok=True)
-    except OSError:
-        # Silently fail if directory cannot be created (e.g., read-only filesystem on Vercel)
-        pass
-else:
-    LOG_DIR = BASE_DIR / 'logs'
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': True,
-    'formatters': {
-        'verbose': {
-            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
-            'style': '{',
-        },
-        'simple': {
-            'format': '{levelname} {asctime} {module} {message}',
-            'style': '{',
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple',
-        },
-        'file': {
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': str(BASE_DIR / LOG_FILE),
-            'maxBytes': 5 * 1024 * 1024,  # 5 MB
-            'backupCount': 5,
-            'formatter': 'verbose',
-        },
-    },
-    'root': {
-        'handlers': ['console', 'file'] if LOG_ENABLED else [],
-        'level': LOG_LEVEL if LOG_ENABLED else 'CRITICAL',
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console', 'file'] if LOG_ENABLED else [],
-            'level': LOG_LEVEL if LOG_ENABLED else 'CRITICAL',
-            'propagate': False,
-        },
-        'apps': {
-            'handlers': ['console', 'file'] if LOG_ENABLED else [],
-            'level': ('DEBUG' if DEBUG else LOG_LEVEL) if LOG_ENABLED else 'CRITICAL',
-            'propagate': False,
-        },
-    },
-}
+# Logging is disabled globally. Django's default logging is turned off.
+LOGGING_CONFIG = None
 
 # ---------------------------------------------------------------------------
 # Redis Cache Backend
