@@ -22,9 +22,15 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 SECRET_KEY: str = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-fallback')
 DEBUG: bool = os.getenv('DJANGO_DEBUG', 'True') == 'True'
-ALLOWED_HOSTS: List[str] = os.getenv(
-    'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1'
-).split(',')
+ALLOWED_HOSTS: List[str] = [
+    host.strip() for host in os.getenv(
+        'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1'
+    ).split(',')
+]
+
+# Trust X-Forwarded-Host header from proxies (important for Vercel)
+USE_X_FORWARDED_HOST: bool = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # ---------------------------------------------------------------------------
 # Installed Apps
