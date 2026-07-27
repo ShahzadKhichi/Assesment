@@ -168,7 +168,7 @@ GOOGLE_MAPS_API_KEY: str = os.getenv('GOOGLE_MAPS_API_KEY', '')
 # ---------------------------------------------------------------------------
 # PDF Storage
 # ---------------------------------------------------------------------------
-PDF_STORAGE_PATH: str = os.getenv('PDF_STORAGE_PATH', 'media/logs/')
+PDF_STORAGE_PATH: str = os.getenv('PDF_STORAGE_PATH', 'media/')
 
 # ---------------------------------------------------------------------------
 # Logging
