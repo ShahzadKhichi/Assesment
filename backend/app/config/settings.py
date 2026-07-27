@@ -177,9 +177,16 @@ LOG_ENABLED: bool = os.getenv('LOG_ENABLED', 'True').lower() == 'true'
 LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')
 LOG_FILE: str = os.getenv('LOG_FILE', 'logs/django.log')
 
-# Ensure log directory exists
-LOG_DIR = BASE_DIR / 'logs'
-LOG_DIR.mkdir(exist_ok=True)
+# Ensure log directory exists (only if logging is enabled)
+if LOG_ENABLED:
+    LOG_DIR = BASE_DIR / 'logs'
+    try:
+        LOG_DIR.mkdir(exist_ok=True)
+    except OSError:
+        # Silently fail if directory cannot be created (e.g., read-only filesystem on Vercel)
+        pass
+else:
+    LOG_DIR = BASE_DIR / 'logs'
 
 LOGGING = {
     'version': 1,

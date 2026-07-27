@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { tripApi, TripItem } from '../services/api/tripApi';
 import { RouteMap, HOSBreakdown, RouteTimeline } from '../components/trips';
+import { ShimmerTripDetail } from '../components/loaders';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const TripDetailPage: React.FC = () => {
@@ -53,7 +54,9 @@ const TripDetailPage: React.FC = () => {
       </div>
 
       {loading && (
-        <div className="glass-card p-6">Loading trip details…</div>
+        <div className="glass-card p-6">
+          <ShimmerTripDetail />
+        </div>
       )}
 
       {error && (
