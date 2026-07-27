@@ -60,8 +60,8 @@ AUTH_USER_MODEL = 'models.User'
 # Middleware
 # ---------------------------------------------------------------------------
 MIDDLEWARE: List[str] = [
+    'corsheaders.middleware.CorsMiddleware',  # Placed at the top to guarantee CORS execution
     'django.middleware.security.SecurityMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -164,12 +164,19 @@ REST_FRAMEWORK = {
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
-# Allow all origins for debugging CORS issues
+# Must be False when CORS_ALLOW_CREDENTIALS = True to prevent browser blocking
 CORS_ALLOW_ALL_ORIGINS: bool = False
-CORS_ALLOWED_ORIGINS: List[str] = ['https://tripplannerfrontend.vercel.app',
-    'http://localhost:3000',
-    'https://*.vercel.app',]
+
+# Dynamically loads allowed origins from environment variable or falls back to local/prod strings
+cors_origins_env = os.getenv(
+    'CORS_ALLOWED_ORIGINS', 
+    'http://localhost:3000,https://vercel.app'
+)
+CORS_ALLOWED_ORIGINS: List[str] = [origin.strip() for origin in cors_origins_env.split(',')]
+
+# Kept True to allow passing authentication cookies, tokens, or sessions
 CORS_ALLOW_CREDENTIALS: bool = True
+
 CORS_EXPOSE_HEADERS: List[str] = [
     'Content-Type',
     'X-CSRFToken',
@@ -204,7 +211,7 @@ CORS_PREFLIGHT_MAX_AGE: int = 86400
 
 # CSRF Configuration for cross-origin requests
 CSRF_TRUSTED_ORIGINS: List[str] = [
-    'https://tripplannerfrontend.vercel.app',
+    'https://vercel.app',
     'http://localhost:3000',
     'https://*.vercel.app',
 ]
@@ -242,44 +249,3 @@ CACHES = {
         }
     }
 }
-
-# ---------------------------------------------------------------------------
-# Celery Async Task Queue Configuration
-# ---------------------------------------------------------------------------
-CELERY_BROKER_URL = f"{REDIS_URL}/0"
-CELERY_RESULT_BACKEND = f"{REDIS_URL}/0"
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
-
-# ---------------------------------------------------------------------------
-# REST Framework & JWT Configuration
-# ---------------------------------------------------------------------------
-REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = [
-    'rest_framework_simplejwt.authentication.JWTAuthentication',
-    'rest_framework.authentication.SessionAuthentication',
-]
-
-from datetime import timedelta
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': True,
-    'BLACKLIST_AFTER_ROTATION': True,
-    'AUTH_HEADER_TYPES': ('Bearer',),
-}
-
-# ---------------------------------------------------------------------------
-# Email Configuration
-# ---------------------------------------------------------------------------
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND', 'django.core.mail.backends.smtp.EmailBackend')
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True') == 'True'
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'shahzadkhichi996@gmail.com')
-
-
