@@ -164,31 +164,47 @@ REST_FRAMEWORK = {
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
-# Allow specific frontend origins
+# Allow all origins for debugging CORS issues
 CORS_ALLOW_ALL_ORIGINS: bool = True
-CORS_ALLOWED_ORIGINS: List[str] = [
-    'https://tripplannerfrontend.vercel.app/',
-    'http://localhost:3000/',
-]
+CORS_ALLOWED_ORIGINS: List[str] = []
 CORS_ALLOW_CREDENTIALS: bool = True
-# CORS_EXPOSE_HEADERS: List[str] = ['Content-Type', 'X-CSRFToken']
-# CORS_ALLOW_METHODS: List[str] = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
-# CORS_ALLOW_HEADERS: List[str] = [
-#     'accept',
-#     'accept-encoding',
-#     'authorization',
-#     'content-type',
-#     'dnt',
-#     'origin',
-#     'user-agent',
-#     'x-csrftoken',
-#     'x-requested-with',
-# ]
+CORS_EXPOSE_HEADERS: List[str] = [
+    'Content-Type',
+    'X-CSRFToken',
+    'Authorization',
+    'X-Requested-With',
+]
+CORS_ALLOW_METHODS: List[str] = [
+    'DELETE',
+    'GET',
+    'HEAD',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+CORS_ALLOW_HEADERS: List[str] = [
+    'accept',
+    'accept-encoding',
+    'accept-language',
+    'access-control-allow-headers',
+    'access-control-allow-methods',
+    'access-control-allow-origin',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+CORS_PREFLIGHT_MAX_AGE: int = 86400
 
 # CSRF Configuration for cross-origin requests
 CSRF_TRUSTED_ORIGINS: List[str] = [
     'https://tripplannerfrontend.vercel.app',
     'http://localhost:3000',
+    'https://*.vercel.app',
 ]
 CSRF_COOKIE_SECURE: bool = False
 CSRF_COOKIE_HTTPONLY: bool = False
