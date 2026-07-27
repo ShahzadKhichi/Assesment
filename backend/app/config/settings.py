@@ -173,6 +173,7 @@ PDF_STORAGE_PATH: str = os.getenv('PDF_STORAGE_PATH', 'media/logs/')
 # ---------------------------------------------------------------------------
 # Logging
 # ---------------------------------------------------------------------------
+LOG_ENABLED: bool = os.getenv('LOG_ENABLED', 'True').lower() == 'true'
 LOG_LEVEL: str = os.getenv('LOG_LEVEL', 'INFO')
 LOG_FILE: str = os.getenv('LOG_FILE', 'logs/django.log')
 
@@ -182,7 +183,7 @@ LOG_DIR.mkdir(exist_ok=True)
 
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
+    'disable_existing_loggers': True,
     'formatters': {
         'verbose': {
             'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
@@ -207,18 +208,18 @@ LOGGING = {
         },
     },
     'root': {
-        'handlers': ['console', 'file'],
-        'level': LOG_LEVEL,
+        'handlers': ['console', 'file'] if LOG_ENABLED else [],
+        'level': LOG_LEVEL if LOG_ENABLED else 'CRITICAL',
     },
     'loggers': {
         'django': {
-            'handlers': ['console', 'file'],
-            'level': LOG_LEVEL,
+            'handlers': ['console', 'file'] if LOG_ENABLED else [],
+            'level': LOG_LEVEL if LOG_ENABLED else 'CRITICAL',
             'propagate': False,
         },
         'apps': {
-            'handlers': ['console', 'file'],
-            'level': 'DEBUG' if DEBUG else LOG_LEVEL,
+            'handlers': ['console', 'file'] if LOG_ENABLED else [],
+            'level': ('DEBUG' if DEBUG else LOG_LEVEL) if LOG_ENABLED else 'CRITICAL',
             'propagate': False,
         },
     },
