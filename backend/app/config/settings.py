@@ -22,11 +22,15 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent
 
 SECRET_KEY: str = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-fallback')
 DEBUG: bool = os.getenv('DJANGO_DEBUG', 'True') == 'True'
-ALLOWED_HOSTS: List[str] = [
-    host.strip() for host in os.getenv(
-        'DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1'
-    ).split(',')
-]
+
+# Allow all hosts (useful for development/Vercel deployments)
+allowed_hosts_str = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1')
+if allowed_hosts_str.strip() == '*':
+    ALLOWED_HOSTS: List[str] = ['*']
+else:
+    ALLOWED_HOSTS: List[str] = [
+        host.strip() for host in allowed_hosts_str.split(',')
+    ]
 
 # Trust X-Forwarded-Host header from proxies (important for Vercel)
 USE_X_FORWARDED_HOST: bool = True
@@ -160,11 +164,9 @@ REST_FRAMEWORK = {
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
-CORS_ALLOW_ALL_ORIGINS: bool = DEBUG
-CORS_ALLOWED_ORIGINS: List[str] = [
-    'http://localhost:3000',
-    'http://localhost:8000',
-]
+# Allow all origins to avoid CORS issues
+CORS_ALLOW_ALL_ORIGINS: bool = True
+CORS_ALLOWED_ORIGINS: List[str] = []
 
 # ---------------------------------------------------------------------------
 # Google Maps
