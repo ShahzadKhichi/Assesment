@@ -165,8 +165,10 @@ REST_FRAMEWORK = {
 # CORS
 # ---------------------------------------------------------------------------
 # Allow all origins for debugging CORS issues
-CORS_ALLOW_ALL_ORIGINS: bool = True
-CORS_ALLOWED_ORIGINS: List[str] = []
+CORS_ALLOW_ALL_ORIGINS: bool = False
+CORS_ALLOWED_ORIGINS: List[str] = ['https://tripplannerfrontend.vercel.app',
+    'http://localhost:3000',
+    'https://*.vercel.app',]
 CORS_ALLOW_CREDENTIALS: bool = True
 CORS_EXPOSE_HEADERS: List[str] = [
     'Content-Type',
