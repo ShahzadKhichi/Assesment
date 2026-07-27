@@ -164,9 +164,12 @@ REST_FRAMEWORK = {
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
-# Allow all origins to avoid CORS issues
-CORS_ALLOW_ALL_ORIGINS: bool = True
-CORS_ALLOWED_ORIGINS: List[str] = []
+# Allow specific frontend origins
+CORS_ALLOW_ALL_ORIGINS: bool = False
+CORS_ALLOWED_ORIGINS: List[str] = [
+    'https://tripplannerfrontend.vercel.app',
+    'http://localhost:3000',
+]
 CORS_ALLOW_CREDENTIALS: bool = True
 CORS_EXPOSE_HEADERS: List[str] = ['Content-Type', 'X-CSRFToken']
 CORS_ALLOW_METHODS: List[str] = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
@@ -184,9 +187,8 @@ CORS_ALLOW_HEADERS: List[str] = [
 
 # CSRF Configuration for cross-origin requests
 CSRF_TRUSTED_ORIGINS: List[str] = [
-    'https://*.vercel.app',
+    'https://tripplannerfrontend.vercel.app',
     'http://localhost:3000',
-    'http://localhost:8000',
 ]
 CSRF_COOKIE_SECURE: bool = False
 CSRF_COOKIE_HTTPONLY: bool = False
