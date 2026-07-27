@@ -167,6 +167,30 @@ REST_FRAMEWORK = {
 # Allow all origins to avoid CORS issues
 CORS_ALLOW_ALL_ORIGINS: bool = True
 CORS_ALLOWED_ORIGINS: List[str] = []
+CORS_ALLOW_CREDENTIALS: bool = True
+CORS_EXPOSE_HEADERS: List[str] = ['Content-Type', 'X-CSRFToken']
+CORS_ALLOW_METHODS: List[str] = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+CORS_ALLOW_HEADERS: List[str] = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# CSRF Configuration for cross-origin requests
+CSRF_TRUSTED_ORIGINS: List[str] = [
+    'https://*.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:8000',
+]
+CSRF_COOKIE_SECURE: bool = False
+CSRF_COOKIE_HTTPONLY: bool = False
+CSRF_COOKIE_SAMESITE: str = 'Lax'
 
 # ---------------------------------------------------------------------------
 # Google Maps
