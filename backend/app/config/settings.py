@@ -164,24 +164,15 @@ REST_FRAMEWORK = {
 # ---------------------------------------------------------------------------
 # CORS
 # ---------------------------------------------------------------------------
-# Must be False when CORS_ALLOW_CREDENTIALS = True to prevent browser blocking
-CORS_ALLOW_ALL_ORIGINS: bool = False
-
-# Dynamically loads allowed origins from environment variable or falls back to local/prod strings
-cors_origins_env = os.getenv(
-    'CORS_ALLOWED_ORIGINS', 
-    'http://localhost:3000,https://tripplannerfrontend.vercel.app'
-)
-CORS_ALLOWED_ORIGINS: List[str] = [origin.strip() for origin in cors_origins_env.split(',')]
-
-# Kept True to allow passing authentication cookies, tokens, or sessions
-CORS_ALLOW_CREDENTIALS: bool = True
+# Allow the frontend origins for now so the browser can complete preflight checks.
+CORS_ALLOW_ALL_ORIGINS: bool = True
+CORS_ALLOWED_ORIGINS: List[str] = []
+CORS_ALLOW_CREDENTIALS: bool = False
 
 CORS_EXPOSE_HEADERS: List[str] = [
     'Content-Type',
     'X-CSRFToken',
     'Authorization',
-    'X-Requested-With',
 ]
 CORS_ALLOW_METHODS: List[str] = [
     'DELETE',
@@ -196,9 +187,6 @@ CORS_ALLOW_HEADERS: List[str] = [
     'accept',
     'accept-encoding',
     'accept-language',
-    'access-control-allow-headers',
-    'access-control-allow-methods',
-    'access-control-allow-origin',
     'authorization',
     'content-type',
     'dnt',
@@ -211,9 +199,9 @@ CORS_PREFLIGHT_MAX_AGE: int = 86400
 
 # CSRF Configuration for cross-origin requests
 CSRF_TRUSTED_ORIGINS: List[str] = [
-    'https://vercel.app',
     'http://localhost:3000',
-    'https://*.vercel.app',
+    'https://tripplannerfrontend.vercel.app',
+    'https://tripplanner-i3tanh01x-shahzadkhichis-projects.vercel.app',
 ]
 CSRF_COOKIE_SECURE: bool = False
 CSRF_COOKIE_HTTPONLY: bool = False
