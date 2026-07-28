@@ -162,18 +162,28 @@ REST_FRAMEWORK = {
 }
 
 # ---------------------------------------------------------------------------
-# CORS
+# CORS Configuration - FIXED
 # ---------------------------------------------------------------------------
-# Allow the frontend origins for now so the browser can complete preflight checks.
-CORS_ALLOW_ALL_ORIGINS: bool = True
-CORS_ALLOWED_ORIGINS: List[str] = []
-CORS_ALLOW_CREDENTIALS: bool = False
+# Explicitly list allowed origins instead of allowing all
+CORS_ALLOW_ALL_ORIGINS: bool = False
+
+# List the specific origins that are allowed to access this API
+CORS_ALLOWED_ORIGINS: List[str] = [
+    'http://localhost:3000',           # Local development
+    'http://localhost:3001',           # Alternative local port
+    'https://tripplannerfrontend.vercel.app',  # Your frontend domain
+    'https://tripplanner-i3tanh01x-shahzadkhichis-projects.vercel.app',  # Vercel preview
+]
+
+# Allow credentials (cookies, authorization headers, etc.)
+CORS_ALLOW_CREDENTIALS: bool = True
 
 CORS_EXPOSE_HEADERS: List[str] = [
     'Content-Type',
     'X-CSRFToken',
     'Authorization',
 ]
+
 CORS_ALLOW_METHODS: List[str] = [
     'DELETE',
     'GET',
@@ -183,6 +193,7 @@ CORS_ALLOW_METHODS: List[str] = [
     'POST',
     'PUT',
 ]
+
 CORS_ALLOW_HEADERS: List[str] = [
     'accept',
     'accept-encoding',
@@ -195,17 +206,29 @@ CORS_ALLOW_HEADERS: List[str] = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
 CORS_PREFLIGHT_MAX_AGE: int = 86400
 
-# CSRF Configuration for cross-origin requests
+# ---------------------------------------------------------------------------
+# CSRF Configuration
+# ---------------------------------------------------------------------------
 CSRF_TRUSTED_ORIGINS: List[str] = [
     'http://localhost:3000',
+    'http://localhost:3001',
     'https://tripplannerfrontend.vercel.app',
     'https://tripplanner-i3tanh01x-shahzadkhichis-projects.vercel.app',
 ]
-CSRF_COOKIE_SECURE: bool = False
+
+# CSRF Cookie Settings
+CSRF_COOKIE_SECURE: bool = False  # Set to True in production with HTTPS
 CSRF_COOKIE_HTTPONLY: bool = False
 CSRF_COOKIE_SAMESITE: str = 'Lax'
+CSRF_COOKIE_DOMAIN: str = None  # Set to your domain if needed
+
+# Session Cookie Settings
+SESSION_COOKIE_SECURE: bool = False  # Set to True in production with HTTPS
+SESSION_COOKIE_SAMESITE: str = 'Lax'
+SESSION_COOKIE_HTTPONLY: bool = True
 
 # ---------------------------------------------------------------------------
 # Google Maps
@@ -237,3 +260,23 @@ CACHES = {
         }
     }
 }
+
+# ---------------------------------------------------------------------------
+# Security Settings for Production
+# ---------------------------------------------------------------------------
+# These settings should be enabled in production
+if not DEBUG:
+    # HTTPS Settings
+    SECURE_SSL_REDIRECT: bool = True
+    SESSION_COOKIE_SECURE: bool = True
+    CSRF_COOKIE_SECURE: bool = True
+    
+    # HSTS Settings
+    SECURE_HSTS_SECONDS: int = 31536000  # 1 year
+    SECURE_HSTS_PRELOAD: bool = True
+    SECURE_HSTS_INCLUDE_SUBDOMAINS: bool = True
+    
+    # Other Security Settings
+    SECURE_CONTENT_TYPE_NOSNIFF: bool = True
+    SECURE_BROWSER_XSS_FILTER: bool = True
+    X_FRAME_OPTIONS: str = 'DENY'

@@ -7,7 +7,6 @@ export const axiosInstance = axios.create({
     'Content-Type': 'application/json',
   },
   timeout: 15000,
-  withCredentials: true,
 });
 
 // Interceptor to attach JWT bearer token
