@@ -170,7 +170,7 @@ CORS_ALLOW_ALL_ORIGINS: bool = False
 # Dynamically loads allowed origins from environment variable or falls back to local/prod strings
 cors_origins_env = os.getenv(
     'CORS_ALLOWED_ORIGINS', 
-    'http://localhost:3000,https://vercel.app'
+    'http://localhost:3000,https://tripplannerfrontend.vercel.app'
 )
 CORS_ALLOWED_ORIGINS: List[str] = [origin.strip() for origin in cors_origins_env.split(',')]
 
